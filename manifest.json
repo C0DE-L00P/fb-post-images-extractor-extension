@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Image Downloader",
+  "version": "1.0",
+  "description": "Downloads images with data-visualcompletion attribute and auto-navigates",
+  "permissions": [
+    "downloads",
+    "activeTab",
+    "scripting"
+  ],
+  "action": {
+    "default_title": "Start Download"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+} 
