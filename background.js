@@ -48,6 +48,14 @@ async function createPDF() {
       // Add image at full page width
       doc.addImage(base64data, 'JPEG', 0, 0, pageWidth, pageHeight, undefined, 'FAST');
 
+      // Delete the local image file after adding to doc
+      const filename = imgData.filename;
+      chrome.downloads.search({ filename: filename }, (results) => {
+        results.forEach((result) => {
+          chrome.downloads.removeFile(result.id);
+        });
+      });
+
     } catch (error) {
       console.error('Error processing image:', error);
     }
@@ -97,7 +105,7 @@ function startScanning(tabId) {
       const nextButton = document.querySelector('[style*="background-position: 0px -25px; background-size: auto; width: 24px; height: 24px; background-repeat: no-repeat; display: inline-block;"]');
       if (nextButton) {
         nextButton.click();
-        setTimeout(scanAndDownload, 500);
+        setTimeout(scanAndDownload, 700);
       }
     } else if (lastImageCount > 0) {
       chrome.runtime.sendMessage({
@@ -105,7 +113,7 @@ function startScanning(tabId) {
         tabId: tabId
       });
     } else {
-      setTimeout(scanAndDownload, 100);
+      setTimeout(scanAndDownload, 200);
     }
   }
 
